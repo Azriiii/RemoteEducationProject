@@ -1,0 +1,94 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.CreateBook {
+  background-color: #ffff;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+.ShowBookDetails {
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+.UpdateBookInfo {
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+.ShowBookList {
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 100px;
+  color: rgb(0, 0, 0);
+}
+
+
+/* BookList Styles */
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  max-width: 1120px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+
+.desc {
+  height: 130px;
+  padding: 10px;
+}
+
+.desc h2 {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.desc h3, p {
+  font-weight: 300;
+}
+
+.desc h3 {
+  color: #6c757d;
+  font-size: 1em;
+  padding: 10px 0 10px 0;
+}

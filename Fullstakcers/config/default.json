@@ -1,0 +1,4 @@
+{
+  "mongoURI":
+    "mongodb+srv://Louay:Classroom@classroom.odan4.mongodb.net/Classroom?retryWrites=true&w=majority"
+}
