@@ -84,6 +84,7 @@ const { name, email, password1, textChange, role } = formData;
 const [titre, setTitre] = useState('');
 const [prix, setPrix] = useState('');
 const [category, setCategory] = useState('');
+
 const [user, setUser] = useState('');
 const [nbrlesson, setNbrlesson] = useState('');
 const [desc, setDesc] = useState('');
@@ -254,11 +255,11 @@ const onSubmitHandler = (e)=>{
           />
           <InputGroup
             label="User"
-            type="text"
+            type="hidden"
             name="user"
             onChange={e => setUser(e.target.value)}
-      value={name}
-            errors={errors.user}
+    
+          value={name}
             placeholder="user"
           />
              <InputGroup
