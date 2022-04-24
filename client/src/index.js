@@ -42,7 +42,7 @@ ReactDOM.render(
        <Route path="/about" exact component={AboutUs} />
        <Route path="/contact" exact component={Contactus} />
        <Route path="/recrutement" exact component={Recrutement} />
-       <Route path="/met" exact component={Meeting} />
+       <Route path='/met' exact render={props => <Meeting {...props} />} />
        <Route path="/:id" exact component={Details} />
       
     </Switch>
