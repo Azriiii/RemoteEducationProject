@@ -1,9 +1,11 @@
 import React, { useEffect, useState ,Component} from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 import HeaderF from "../Routes/Headerformat";
 
 import { Link } from 'react-router-dom'
-import axios from "axios";
+
 
 import SubBar from "../Routes/SubBar";
 import AddIcon from '@material-ui/icons/Add';
@@ -26,8 +28,14 @@ import {
 } from "@material-ui/core";
 import "./Meeting.css";
 
-function Meeting() {
-  
+function Meeting({history}) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password1: '',
+    textChange: 'Update',
+    role: ''
+  });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [show, setShow] = useState(false);
@@ -67,10 +75,72 @@ const onSubmitHandler = (e)=>{
 
   /* find all users */
   useEffect(async () => {
+    loadProfile();
     await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
       setCour(res.data);
     });
   });
+
+  const loadProfile = () => {
+    const token = getCookie('token');
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        const { role, name, email } = res.data;
+        setFormData({ ...formData, role, name, email });
+      })
+      .catch(err => {
+        toast.error(`Error To Your Information ${err.response.statusText}`);
+        if (err.response.status === 401) {
+          signout(() => {
+            history.push('/login');
+          });
+        }
+      });
+  };
+  const { name, email, password1, textChange, role } = formData;
+
+// idhafa
+const handleChange = text => e => {
+  setFormData({ ...formData, [text]: e.target.value });
+};
+const handleSubmit = e => {
+  const token = getCookie('token');
+  console.log(token);
+  e.preventDefault();
+  setFormData({ ...formData, textChange: 'Submitting' });
+  axios
+    .put(
+      `${process.env.REACT_APP_API_URL}/user/update`,
+      {
+        name,
+        email,
+        password: password1
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    )
+    .then(res => {
+      updateUser(res, () => {
+        toast.success('Profile Updated Successfully');
+        setFormData({ ...formData, textChange: 'Update' });
+      });
+    })
+    .catch(err => {
+      console.log(err.response);
+    });
+};
+
+//niheyet idhafa
+
+
    /* delete */
    const OnDelete = (id__)=>{
     if(window.confirm("are you sure to delete this course")){
@@ -204,7 +274,7 @@ const onSubmitHandler = (e)=>{
             type="text"
             name="user"
             onChangeHandler={onChangeHandler}
-            errors={errors.user}
+            value = {name}
             placeholder="user"
           />
              <InputGroup

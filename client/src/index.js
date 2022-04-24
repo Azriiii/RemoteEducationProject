@@ -39,10 +39,10 @@ ReactDOM.render(
        <AdminRoute path="/admin" exact component={Admin} />
        <Route path="/" exact component={Home} />
        <Route path="/calendar" exact component={Calendrier} />
-       <Route path="/about" exact component={AboutUs} />
+       <Route path="/about" exact render={props => <AboutUs {...props}/>} />
        <Route path="/contact" exact component={Contactus} />
        <Route path="/recrutement" exact component={Recrutement} />
-       <Route path="/met" exact component={Meeting} />
+       <Route path="/met" exact render={props => <Meeting {...props}/>}  />
        <Route path="/:id" exact component={Details} />
       
     </Switch>
