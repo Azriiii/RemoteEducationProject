@@ -47,13 +47,7 @@ function Meeting({ history }) {
     theme === 'light' ? setTheme('dark') : setTheme('light')}
     
  
-const [cours, setCour] = useState([]);
- /* find all users */
- useEffect(async () => {
-  loadProfile();
-  await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
-    setCour(res.data);
-  });   }, []);
+
  
 
 
@@ -80,6 +74,15 @@ const loadProfile = () => {
     });
 };
 const { name, email, password1, textChange, role } = formData;
+const [cours, setCour] = useState([]);
+ /* find all users */
+ useEffect(async () => {
+  loadProfile();
+  await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
+    var userId = res.data.filter((e)=> e.user === formData.name )
+    setCour(userId);
+    console.log(userId,"aaaaaaaaa")
+  });   }, []);
 
 const [titre, setTitre] = useState('');
 const [prix, setPrix] = useState('');
@@ -117,6 +120,9 @@ const onSubmitHandler = (e)=>{
   .catch(err=>setErrors(err.response.data))
   
 }
+useEffect(()=>({
+
+}))
 
  
   // const handleChange = text => e => {
@@ -148,7 +154,7 @@ const onSubmitHandler = (e)=>{
 
 <div class="back">
 
-
+{name}
 
 
 <HeaderF/>
@@ -190,7 +196,7 @@ const onSubmitHandler = (e)=>{
         <div className="" >
           <div >
         <div className='container-fluid' > 
-         welcome {name}
+      
  {cours.map(({ titre, prix,published_date,desc,user,nbrlesson,modalite,_id }) => (
  
               <Meetings
