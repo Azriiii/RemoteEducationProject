@@ -44,7 +44,7 @@ ReactDOM.render(
        <Route path="/recrutement" exact component={Recrutement} />
        <Route path="/met" exact render={props => <Meeting {...props}/>}  />
        <Route path="/:id" exact component={Details} />
-      
+       
     </Switch>
   </BrowserRouter>,
 

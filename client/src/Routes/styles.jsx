@@ -15,7 +15,8 @@ export default makeStyles({
   },
   card: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection:'row',
+    flexWrap: 'row', 
     justifyContent: 'space-between',
     borderRadius: '15px',
     height: '100%',

@@ -1,21 +1,20 @@
 import React, { useEffect, useState ,Component} from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
-import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
+
 import HeaderF from "../Routes/Headerformat";
 
 import { Link } from 'react-router-dom'
-
-
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 import SubBar from "../Routes/SubBar";
 import AddIcon from '@material-ui/icons/Add';
 import InputGroup from "../Routes/InputGroup";
 import Meetings from "../Routes/Meetings";
-
+import {useSelector} from 'react-redux';
 
 import {ThemeProvider} from "styled-components";
 import { GlobalStyles } from "./globalStyles";
-import { lightTheme, darkTheme } from "./theme"
+import { lightTheme, darkTheme } from "./theme";
+import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 
 import {
   Button,
@@ -28,7 +27,9 @@ import {
 } from "@material-ui/core";
 import "./Meeting.css";
 
-function Meeting({history}) {
+function Meeting({ history }) {
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,29 +40,70 @@ function Meeting({history}) {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [show, setShow] = useState(false);
-  const [form, setForm] = useState({});
+  
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState('light');
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light')}
+    
+    const [cours, setCour] = useState([]);
+    /* find all users */
+    useEffect(async () => {
+     loadProfile();
+     await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
+       setCour(res.data);
+     });   }, []);
 
- 
-const [cours, setCour] = useState([]);
- 
-const onChangeHandler = (e) => {
-  setForm({
-    ...form,
-    [e.target.name]: e.target.value,
-  });
-  
+const loadProfile = () => {
+  const token = getCookie('token');
+  axios
+    .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      const { role, name, email } = res.data;
+      setFormData({ ...formData, role, name, email });
+    })
+    .catch(err => {
+      toast.error(`Error To Your Information ${err.response.statusText}`);
+      if (err.response.status === 401) {
+        signout(() => {
+          history.push('/login');
+        });
+      }
+    });
 };
+const { name, email, password1, textChange, role } = formData;
+
+
+const [titre, setTitre] = useState('');
+const [prix, setPrix] = useState('');
+const [category, setCategory] = useState('');
+
+const [user, setUser] = useState('');
+const [nbrlesson, setNbrlesson] = useState('');
+const [desc, setDesc] = useState('');
+const [modalite, setModalite] = useState('');
+const [published_date, setPublished_date] = useState('');
+
+
+
 const onSubmitHandler = (e)=>{
   e.preventDefault();
-  axios.post(`${process.env.REACT_APP_API_URL}/cour`, form)
+  axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date,desc,user,nbrlesson,modalite,category})
   .then(res=>{
     setMessage(res.data.message)
     /* hide form after save */
-    setForm({})
+   setTitre()
+   setPrix()
+   setPublished_date()
+   setDesc()
+   setUser()
+   setNbrlesson()
+   setModalite()
+   setCategory()
     /* hide errors after save */
     setErrors({})
     setShow(true)
@@ -72,75 +114,16 @@ const onSubmitHandler = (e)=>{
   .catch(err=>setErrors(err.response.data))
   
 }
+useEffect(()=>({
 
-  /* find all users */
-  useEffect(async () => {
-    loadProfile();
-    await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
-      setCour(res.data);
-    });
-  });
+}))
 
-  const loadProfile = () => {
-    const token = getCookie('token');
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${isAuth()._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        const { role, name, email } = res.data;
-        setFormData({ ...formData, role, name, email });
-      })
-      .catch(err => {
-        toast.error(`Error To Your Information ${err.response.statusText}`);
-        if (err.response.status === 401) {
-          signout(() => {
-            history.push('/login');
-          });
-        }
-      });
-  };
-  const { name, email, password1, textChange, role } = formData;
+ 
+  // const handleChange = text => e => {
 
-// idhafa
-const handleChange = text => e => {
-  setFormData({ ...formData, [text]: e.target.value });
-};
-const handleSubmit = e => {
-  const token = getCookie('token');
-  console.log(token);
-  e.preventDefault();
-  setFormData({ ...formData, textChange: 'Submitting' });
-  axios
-    .put(
-      `${process.env.REACT_APP_API_URL}/user/update`,
-      {
-        name,
-        email,
-        password: password1
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    )
-    .then(res => {
-      updateUser(res, () => {
-        toast.success('Profile Updated Successfully');
-        setFormData({ ...formData, textChange: 'Update' });
-      });
-    })
-    .catch(err => {
-      console.log(err.response);
-    });
-};
-
-//niheyet idhafa
-
-
+  //   setFormData({ ...formData, [text]: e.target.value });
+  // };
+  
    /* delete */
    const OnDelete = (id__)=>{
     if(window.confirm("are you sure to delete this course")){
@@ -165,7 +148,7 @@ const handleSubmit = e => {
 
 <div class="back">
 
-
+{name}
 
 
 <HeaderF/>
@@ -173,7 +156,7 @@ const handleSubmit = e => {
 <Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
    
 <br></br>
-
+<h1></h1>
 <br></br>
 <br></br>
 
@@ -197,18 +180,17 @@ const handleSubmit = e => {
                <br></br>
                <br></br>
                <div
-  id="carouselMultiItemExample"
-  class="carousel slide carousel-dark text-center"
-  data-mdb-ride="carousel">
+  >
 <div >
 <div 
 >
    
     <div >
       <div >
-        <div >
-          <div class="col-lg-12"> 
-        <div className='container-fluid' >  
+        <div className="" >
+          <div >
+        <div className='container-fluid' > 
+      
  {cours.map(({ titre, prix,published_date,desc,user,nbrlesson,modalite,_id }) => (
  
               <Meetings
@@ -249,15 +231,16 @@ const handleSubmit = e => {
             label="Titre"
             type="text"
             name="titre"
-            onChangeHandler={onChangeHandler}
-            errors={errors.titre}
+            value={titre}
+            onChange={e => setTitre(e.target.value)}
             placeholder="title"
           />
           <InputGroup
             label="Prix"
             type="number"
             name="prix"
-            onChangeHandler={onChangeHandler}
+            value={prix}
+            onChange={e => setPrix(e.target.value)}
             errors={errors.prix}
             placeholder="prix*"
           />
@@ -265,7 +248,8 @@ const handleSubmit = e => {
             label="Category"
             type="text"
             name="category"
-            onChangeHandler={onChangeHandler}
+            value={category}
+            onChange={e => setCategory(e.target.value)}
             errors={errors.category}
             placeholder="category"
           />
@@ -273,15 +257,18 @@ const handleSubmit = e => {
             label="User"
             type="text"
             name="user"
-            onChangeHandler={onChangeHandler}
-            value = {name}
+            onChange={e => setUser(e.target.value)}
+    
+          value={name}
+          errors={errors.user}
             placeholder="user"
           />
              <InputGroup
             label="Nbrlesson"
             type="number"
             name="nbrlesson"
-            onChangeHandler={onChangeHandler}
+            value={nbrlesson}
+            onChange={e => setNbrlesson(e.target.value)}
             errors={errors.nbrlesson}
             placeholder="nbrlesson"
           />
@@ -289,7 +276,8 @@ const handleSubmit = e => {
             label="Published_date"
             type="date"
             name="published_date"
-            onChangeHandler={onChangeHandler}
+            value={published_date}
+            onChange={e => setPublished_date(e.target.value)}
             errors={errors.published_date}
             placeholder="date de pub"
           />
@@ -297,7 +285,8 @@ const handleSubmit = e => {
             label="Description"
             type="text"
             name="desc"
-            onChangeHandler={onChangeHandler}
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
             errors={errors.desc}
             placeholder="description"
           />
@@ -305,7 +294,8 @@ const handleSubmit = e => {
             label="Modalité"
             type="text"
             name="modalite"
-            onChangeHandler={onChangeHandler}
+            value={modalite}
+            onChange={e => setModalite(e.target.value)}
             errors={errors.modalite}
             placeholder="modalite"
           />

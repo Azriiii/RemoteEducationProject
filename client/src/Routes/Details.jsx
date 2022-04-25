@@ -9,7 +9,8 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 
-function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, OnDelete}) {  
+
+function Details({idCour, titre, description,dateCreation,Id, OnDelete}) {  
  
 
   return (
@@ -20,9 +21,9 @@ function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, O
                 <div className="col-lg-4 templatemo-item-col all soon">
                   <div className="meeting-item">
                     <div className="thumb">
-                      <div className="price">
+                      {/* <div className="price">
                         <span>${prix}</span>
-                      </div>
+                      </div> */}
                       <a href="meeting-details.html"><img src="../assets/images/meeting-01.jpg" alt=""/></a>
                     </div>
                     <div className="down-content">
@@ -64,4 +65,4 @@ function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, O
   );
 }
 
-export default Meetings;
+export default Details;
