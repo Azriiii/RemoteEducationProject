@@ -3,7 +3,7 @@ import Courses from "../Routes/Courses";
 import HeaderVisteur from "../Routes/Header";
 import MainBanner from "../Routes/MainBanner";
 
-import Jitsi from 'react-jitsi'
+
 import SubBar from "../Routes/SubBar";
 
 import axios from "axios";
