@@ -1,64 +1,80 @@
 import React from "react";
+
+import  { useState } from "react";
 import { Link } from 'react-router-dom'
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core/';
+
+import {
+  Button,
+
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+ 
+} from "@material-ui/core";
+
+import { Card, CardActions, CardContent, CardMedia,Typography } from '@material-ui/core/';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import useStyles from './styles';
+import './card.css';
 
 function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, OnDelete}) {  
- 
+  const [open, setOpen] = useState(false);
 
   return (
   
           <div>
-           
-              <div className="row grid">
-                <div className="col-lg-4 templatemo-item-col all soon">
-                  <div className="meeting-item">
-                    <div className="thumb">
-                      <div className="price">
-                        <span>${prix}</span>
-                      </div>
-                      <a href="meeting-details.html"><img src="../assets/images/meeting-01.jpg" alt=""/></a>
-                    </div>
-                    <div className="down-content">
-                      <div className="date">
-                      <h6>{moment(published_date).fromNow()}<span></span></h6>
-                        </div>
-                      <a href="meeting-details.html"><h4> 
-                    <b>   {titre} </b>
-                   </h4></a>
-                     
-                      <p>{desc}<br></br></p>
-                     
-    {user}
-    {nbrlesson}
-    {modalite}
-        
-   
-      <Button size="small" color="primary"  onClick={()=>OnDelete(Id)}><DeleteIcon fontSize="small" /> </Button>
-      <Link to={`/${Id}`} className="text-white"> <Button size="small" color="primary" ><UpdateIcon fontSize="small" /> </Button>
+            <span>
+            <div class="card">
+    <img src="../assets/images/meeting-01.jpg" class="card-img-top" alt="..."/>
+    <div class="card-body">
+      <h5 class="card-title">{titre}</h5>
+      <p class="card-text">{desc}</p>
+      <p class="card-text"><small class="text-muted">{moment(published_date).fromNow()}</small></p>
+      <button type="button" class="btn btn-primary"  onClick={() => setOpen(true)}
+>
+ Détails
+</button>
+    </div>
+  </div>
+  </span>
 
-      
+  <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">{titre}</DialogTitle>
+        <DialogContent>
+
+      <p class="fw-bold">Owner:</p> {user}
+      <p class="fw-bold">Nombre lessons:</p> {nbrlesson}
+      <p class="fw-bold">Modalité:</p> {modalite} 
+      <p class="fw-bold">Prix:</p> ${prix} 
     
-         </Link>
-         
+      <Button size="small" color="primary"  onClick={()=>OnDelete(Id)}><DeleteIcon fontSize="small" /> </Button>
+<Link to={`/${Id}`} className="text-white"> <Button size="small" color="primary" ><UpdateIcon fontSize="small" /> </Button>
+</Link>
       
-     
-                    </div>
-                    
-                 
-                  </div>
-                </div>
-           
-            
-              </div>
-            </div>
+  
+ </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}  variant="primary">
+            Cancel
+          </Button>
          
+        </DialogActions>
+      </Dialog>
+
+
+
+
+      </div>
+      
+  
 
      
   );
