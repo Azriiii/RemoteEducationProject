@@ -92,7 +92,7 @@ function Calendrier() {
         setEventts(res.data);
        
       });
-    });
+    }, []);
      /* delete */
      const OnDelete = (id__)=>{
       if(window.confirm("are you sure to delete this event")){

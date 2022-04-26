@@ -28,10 +28,10 @@ function Home() {
     await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
       setCour(res.data);
     });
-  });
+  }, []);
   
-  const start = Date.now();
-  console.log(start)
+
+
   return  (
     <div>
  

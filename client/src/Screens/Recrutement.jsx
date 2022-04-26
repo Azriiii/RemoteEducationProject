@@ -18,7 +18,7 @@ function Recrutement() {
   await axios.get(`${process.env.REACT_APP_API_URL}/jobs`).then((res) => {
     setRecrutement(res.data);
   });
-});
+}, []);
   return (
     <div>
  

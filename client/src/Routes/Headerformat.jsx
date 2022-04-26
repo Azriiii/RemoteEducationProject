@@ -42,7 +42,7 @@ function HeaderF({ history }) {
   const { name, email, password1, textChange, role } = formData;
   useEffect(async () => {
     loadProfile();
-     });
+  }, []);
   return (
    <div>
 

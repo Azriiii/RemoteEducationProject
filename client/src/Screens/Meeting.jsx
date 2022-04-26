@@ -79,11 +79,12 @@ const [cours, setCour] = useState([]);
 
  /* find all users */
  useEffect(async () => {
-  loadProfile();
  
+  loadProfile();
   await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
     var userId = res.data.filter((e)=> e.user === formData.name )
     setCour(userId);
+ 
     console.log(userId,"aaaaaaaaa")
   }); 
 
@@ -102,6 +103,7 @@ const [published_date, setPublished_date] = useState('');
 
 
 const onSubmitHandler = (e)=>{
+ 
   e.preventDefault();
   axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date,desc,user:name,nbrlesson,modalite,category})
   .then(res=>{
