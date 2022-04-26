@@ -8,7 +8,7 @@ function SubBar() {
       <div class="row">
         <div class="col-lg-8 col-sm-8">
           <div class="left-content">
-            <p>This is an educational <em>HTML CSS</em> template by TemplateMo website.</p>
+           
           </div>
         </div>
         <div class="col-lg-4 col-sm-4">

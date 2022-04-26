@@ -37,6 +37,7 @@ function Meeting({ history }) {
     textChange: 'Update',
     role: ''
   });
+  
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [show, setShow] = useState(false);
@@ -46,13 +47,11 @@ function Meeting({ history }) {
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light')}
     
-    const [cours, setCour] = useState([]);
-    /* find all users */
-    useEffect(async () => {
-     loadProfile();
-     await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
-       setCour(res.data);
-     });   }, []);
+ 
+
+ 
+
+
 
 const loadProfile = () => {
   const token = getCookie('token');
@@ -76,7 +75,19 @@ const loadProfile = () => {
     });
 };
 const { name, email, password1, textChange, role } = formData;
+const [cours, setCour] = useState([]);
 
+ /* find all users */
+ useEffect(async () => {
+  loadProfile();
+ 
+  await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
+    var userId = res.data.filter((e)=> e.user === formData.name )
+    setCour(userId);
+    console.log(userId,"aaaaaaaaa")
+  }); 
+
+});
 
 const [titre, setTitre] = useState('');
 const [prix, setPrix] = useState('');
@@ -92,7 +103,7 @@ const [published_date, setPublished_date] = useState('');
 
 const onSubmitHandler = (e)=>{
   e.preventDefault();
-  axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date,desc,user,nbrlesson,modalite,category})
+  axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date,desc,user:name,nbrlesson,modalite,category})
   .then(res=>{
     setMessage(res.data.message)
     /* hide form after save */
@@ -146,52 +157,41 @@ useEffect(()=>({
  
 
 
-<div class="back">
 
-{name}
+    
 
-
-<HeaderF/>
-<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i></a>
-<Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
-   
-<br></br>
-<h1></h1>
-<br></br>
-<br></br>
-
-
- 
+<div>
 <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+<HeaderF/>
 
+
+
+
+<div>
       
           <GlobalStyles/>
+
+               <br></br>
+
+
+           
+          
+ 
         
-         
+              <br />
+              <h2 className="display-4 text-center">Cours List</h2>
+             
+  <div className="ShowBookList">
+  <div className="center">
+  <Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
 
- 
-
-
- 
-    
-              
-
-               <br></br>
-               <br></br>
-               <br></br>
-               <div
-  >
-<div >
-<div 
->
-   
-    <div >
-      <div >
-        <div className="" >
-          <div >
-        <div className='container-fluid' > 
-      
- {cours.map(({ titre, prix,published_date,desc,user,nbrlesson,modalite,_id }) => (
+            
+<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i></a>
+</div>
+         <div className="list">
+     
+       
+           {cours.map(({ titre, prix,published_date,desc,user,nbrlesson,modalite,_id }) => (
  
               <Meetings
                 titre={titre}
@@ -213,12 +213,9 @@ useEffect(()=>({
             
             
             )}
-          </div></div></div>
-       
-            </div>   </div>   </div>
+ 
 
-     
-     </div></div>
+
  
     <Dialog
         open={open}
@@ -253,16 +250,7 @@ useEffect(()=>({
             errors={errors.category}
             placeholder="category"
           />
-          <InputGroup
-            label="User"
-            type="text"
-            name="user"
-            onChange={e => setUser(e.target.value)}
-    
-          value={name}
-          errors={errors.user}
-            placeholder="user"
-          />
+          
              <InputGroup
             label="Nbrlesson"
             type="number"
@@ -316,16 +304,11 @@ useEffect(()=>({
          
         </DialogActions>
       </Dialog>
-    
-
-  
-    
-    
-  
+    </div></div></div>
  </ThemeProvider>
 
- </div>
 
+ </div>
 
 
     

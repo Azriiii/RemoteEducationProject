@@ -1,16 +1,27 @@
-h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif
-
-
-
-}
-.back{
-
-
-}
-.w3-bar-block .w3-bar-item {padding:20px}
-.cards {
-
-  
-  
+.ShowBookList {
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 100px;
+  color: rgb(0, 0, 0);
   
 }
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* BookList Styles */
+.list {
+  margin-left: auto;
+  margin-right: 300 px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: right;
+    align-items: right;
+    grid-template-columns: repeat(2, 2fr);
+    grid-auto-rows: 1fr;
+    grid-gap: 3px;
+  }

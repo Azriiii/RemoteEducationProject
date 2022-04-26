@@ -21,6 +21,8 @@ import Rec from './Routes/Rec';
 import Recrutement from './Screens/Recrutement';
 import Meeting from './Screens/Meeting';
 import Details from './Screens/Details';
+import Profile from './Screens/profile';
+import Room from './Screens/Room';
 
 
 ReactDOM.render(
@@ -35,16 +37,18 @@ ReactDOM.render(
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
       <Route path='/users/password/forget' exact render={props => <ForgetPassword {...props} />} />      
       <Route path='/users/password/reset/:token' exact render={props => <ResetPassword {...props} />} />
+      <PrivateRoute path="/profile" exact component={Profile} />
       <PrivateRoute path="/private" exact component={Private} />
        <AdminRoute path="/admin" exact component={Admin} />
        <Route path="/" exact component={Home} />
        <Route path="/calendar" exact component={Calendrier} />
-       <Route path="/about" exact render={props => <AboutUs {...props}/>} />
+       <Route path="/about" exact component={AboutUs} />
        <Route path="/contact" exact component={Contactus} />
        <Route path="/recrutement" exact component={Recrutement} />
-       <Route path="/met" exact render={props => <Meeting {...props}/>}  />
+       <Route path='/met' exact render={props => <Meeting {...props} />} />
        <Route path="/:id" exact component={Details} />
-       
+       <Route path="/room" exact component={Room} />
+      
     </Switch>
   </BrowserRouter>,
 
@@ -52,4 +56,3 @@ ReactDOM.render(
   
   document.getElementById('root')
 );
-
