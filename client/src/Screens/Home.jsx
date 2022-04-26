@@ -3,6 +3,7 @@ import Courses from "../Routes/Courses";
 import HeaderVisteur from "../Routes/Header";
 import MainBanner from "../Routes/MainBanner";
 
+import Jitsi from 'react-jitsi'
 import SubBar from "../Routes/SubBar";
 
 import axios from "axios";
@@ -13,6 +14,10 @@ import  KommunicateChat from '../KommunicateChat';
 
 function Home() {
  
+  const [displayName, setDisplayName] = useState('')
+  const [roomName, setRoomName] = useState('')
+  const [password, setPassword] = useState('')
+  const [onCall, setOnCall] = useState(false)
   
   const [cours, setCour] = useState([]);
 
@@ -25,8 +30,9 @@ function Home() {
     });
   });
   
-
-  return (
+  const start = Date.now();
+  console.log(start)
+  return  (
     <div>
  
 
@@ -97,7 +103,6 @@ function Home() {
 
 
 
- 
 
 
   <section class="contact-us" id="contact">

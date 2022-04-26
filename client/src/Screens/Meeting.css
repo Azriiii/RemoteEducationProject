@@ -13,13 +13,15 @@
     align-items: center;
   }
   /* BookList Styles */
-.list {
-  margin-left: auto;
-  margin-right: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: repeat(2, 2fr);
-    grid-auto-rows: 1fr;
-    grid-gap: 2em;
-  }
+  .list {
+    margin-left: auto;
+    margin-right: 300 px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: right;
+      align-items: right;
+      grid-template-columns: repeat(2, 2fr);
+      grid-auto-rows: 1fr;
+      grid-gap: 3px;
+    }
