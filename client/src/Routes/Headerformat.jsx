@@ -74,8 +74,14 @@ function HeaderF({ history }) {
                 </li>
                 <li>
                     <a href="/calendar">
-                        <span class="icon"><i class="fas fa-user-friends"></i></span>
-                        <span class="item">Events</span>
+                        <span class="icon"><i class="fas fa-calendar"></i></span>
+                        <span class="item">To Do</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/room">
+                        <span class="icon"><i class="fas fa-users"></i></span>
+                        <span class="item">Meetings</span>
                     </a>
                 </li>
                 <li>

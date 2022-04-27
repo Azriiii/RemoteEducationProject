@@ -27,8 +27,8 @@ function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, O
 
   return (
   
-          <div>
-            <span>
+          <div className="high">
+         
             <div class="card">
     <img src="../assets/images/meeting-01.jpg" class="card-img-top" alt="..."/>
     <div class="card-body">
@@ -41,7 +41,7 @@ function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, O
 </button>
     </div>
   </div>
-  </span>
+ 
 
   <Dialog
         open={open}

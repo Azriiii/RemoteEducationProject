@@ -99,7 +99,7 @@ const Login = ({ history }) => {
             });
             isAuth() && isAuth().role === 'admin'
               ? history.push('/admin')
-              : history.push('/private');
+              : history.push('/profile');
             toast.success(`Hey ${res.data.user.name}, Welcome back!`);
           });
         })

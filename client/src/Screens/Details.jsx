@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {  useParams,Redirect,useHistory  } from 'react-router-dom';
 
 import HeaderF from '../Routes/Headerformat';
-
+import { ToastContainer, toast } from 'react-toastify';
 import InputGroup from '../Routes/InputGroup';
 
 import "./Meeting.css";
@@ -43,8 +43,11 @@ function Details() {
   useEffect(async () => {
     await axios.get(`${process.env.REACT_APP_API_URL}/cour/${id}`).then((res) => {
       setForm(res.data);
+    
     });
-  }, []);
+   
+  },
+   []);
   return (
     <div>
   
@@ -52,18 +55,21 @@ function Details() {
  <HeaderF/>
  
 
- <section class="contact-us" id="contact">
+ <section >
   
  
-  <section class="apply-now" id="apply">
+  <section >
  
 <div className="container">
      <div className="row">
      <div class="col-lg-9 align-self-center">
           <div class="row">
             <div class="col-lg-12">
-     
+            <ToastContainer />  
         <div className='container-fluid' >
+          <br></br>
+          <br></br>
+          <br></br>
          <form onSubmit={onSubmitHandler} id="contact" className="formt">
           <InputGroup
             label="Titre"
@@ -142,8 +148,8 @@ function Details() {
        
       
     
-          <button className="butt" type="submit">Update course</button>
-          <button    onClick={routeChange} className="butt" >Retour </button>
+          <button className="btn btn-primary" type="submit" >Update course</button>
+          <button    onClick={routeChange} className="btn btn-success" >Retour </button>
         </form>
       
         </div>

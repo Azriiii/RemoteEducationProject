@@ -125,9 +125,9 @@ function Calendrier() {
 
 <HeaderF/>
 
+<div align="center">
 
-
-<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i></a>
+<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i></a></div>
 <br></br>
 
 <br></br>
@@ -143,10 +143,10 @@ function Calendrier() {
          
 
  
-
+<div align="center">
 
           <Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
-           
+          </div>
           
            
       
@@ -165,6 +165,7 @@ function Calendrier() {
        <br></br>
        <br></br>
        <br></br>
+
                 <button class="btn btn-success" type="submit">
                     Add Event
                 </button>
@@ -178,9 +179,10 @@ function Calendrier() {
          
         </DialogActions>
       </Dialog>
-      <Calendar  onDoubleClickEvent={()=>OnDelete(eventts._id)} localizer={localizer} agenda={eventts} events={eventts} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
+   <div align="center">
+      <Calendar  onDoubleClickEvent={()=>OnDelete(eventts._id)} localizer={localizer} agenda={eventts} events={eventts} startAccessor="start" endAccessor="end" style={{ height: 500,width:1400, margin: "50px" }} />
 
-
+      </div>
   
     
     

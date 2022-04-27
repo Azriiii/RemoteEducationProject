@@ -23,7 +23,7 @@ import Meeting from './Screens/Meeting';
 import Details from './Screens/Details';
 import Profile from './Screens/profile';
 import Room from './Screens/Room';
-import ClientCourse from './Screens/ClientCourse';
+
 
 
 ReactDOM.render(
@@ -47,9 +47,9 @@ ReactDOM.render(
        <Route path="/contact" exact component={Contactus} />
        <Route path="/recrutement" exact component={Recrutement} />
        <Route path='/met' exact render={props => <Meeting {...props} />} />
-       <Route path='/courseClient' exact render={props => <ClientCourse {...props} />} />
+       <Route path='/room' exact render={props => <Room {...props} />} />
        <Route path="/:id" exact component={Details} />
-       <Route path="/room" exact component={Room} />
+    
       
     </Switch>
   </BrowserRouter>,

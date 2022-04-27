@@ -16,6 +16,7 @@ import { GlobalStyles } from "./globalStyles";
 import { lightTheme, darkTheme } from "./theme";
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 
+
 import {
   Button,
 
@@ -26,6 +27,9 @@ import {
  
 } from "@material-ui/core";
 import "./Meeting.css";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+  
 
 function Meeting({ history }) {
 
@@ -84,8 +88,9 @@ const [cours, setCour] = useState([]);
   await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
     var userId = res.data.filter((e)=> e.user === formData.name )
     setCour(userId);
- 
-    console.log(userId,"aaaaaaaaa")
+  
+  
+   
   }); 
 
 });
@@ -105,6 +110,7 @@ const [published_date, setPublished_date] = useState('');
 const onSubmitHandler = (e)=>{
  
   e.preventDefault();
+ 
   axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date,desc,user:name,nbrlesson,modalite,category})
   .then(res=>{
     setMessage(res.data.message)
@@ -123,15 +129,22 @@ const onSubmitHandler = (e)=>{
     setTimeout(() => {
       setShow(false)
     }, 4000);
+    toast.success("added avec succes"); 
   })
+ 
   .catch(err=>setErrors(err.response.data))
   
 }
 useEffect(()=>({
 
+
 }))
 
- 
+ // filter 
+ const filterOptions = createFilterOptions({
+  matchFrom: 'start',
+  stringify: option => option,
+});
   // const handleChange = text => e => {
 
   //   setFormData({ ...formData, [text]: e.target.value });
@@ -148,6 +161,7 @@ useEffect(()=>({
       setTimeout(() => {
         setShow(false)
       }, 4000);
+      toast.error("supprimé avec succes"); 
      })
     }
    }
@@ -158,40 +172,37 @@ useEffect(()=>({
    
  
 
-
-
-    
-
 <div>
-<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+
 <HeaderF/>
+<body>
+
+
+  <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
 
 
 
-
-<div>
-      
           <GlobalStyles/>
 
-               <br></br>
+<div>
 
+<div align="center">
+<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i>Dark</a>
+</div>
+    
 
-           
-          
- 
-        
-              <br />
               <h2 className="display-4 text-center">Cours List</h2>
              
   <div className="ShowBookList">
   <div className="center">
+    
   <Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
 
-            
-<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i></a>
+  <ToastContainer />  
+
 </div>
          <div className="list">
-     
+       
        
            {cours.map(({ titre, prix,published_date,desc,user,nbrlesson,modalite,_id }) => (
  
@@ -243,6 +254,15 @@ useEffect(()=>({
             errors={errors.prix}
             placeholder="prix*"
           />
+            <InputGroup
+            label="Date de publication"
+            type="date"
+            name="published_date"
+            value={published_date}
+            onChange={e => setPublished_date(e.target.value)}
+            errors={errors.published_date}
+            placeholder="published_date"
+          />
           <InputGroup
             label="Category"
             type="text"
@@ -262,15 +282,7 @@ useEffect(()=>({
             errors={errors.nbrlesson}
             placeholder="nbrlesson"
           />
-               <InputGroup
-            label="Published_date"
-            type="date"
-            name="published_date"
-            value={published_date}
-            onChange={e => setPublished_date(e.target.value)}
-            errors={errors.published_date}
-            placeholder="date de pub"
-          />
+               
                <InputGroup
             label="Description"
             type="text"
@@ -310,9 +322,9 @@ useEffect(()=>({
  </ThemeProvider>
 
 
+ </body>
+
  </div>
-
-
     
     
    

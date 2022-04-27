@@ -7,7 +7,7 @@ import Jitsi from 'react-jitsi'
 import SubBar from "../Routes/SubBar";
 
 import axios from "axios";
-
+import "./feuille.css";
 
 import Footer from "../Routes/Footer";
 import  KommunicateChat from '../KommunicateChat';

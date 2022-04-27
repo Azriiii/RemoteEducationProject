@@ -10,6 +10,7 @@ import axios from "axios";
 import Footer from "../Routes/Footer";
 import  KommunicateChat from '../KommunicateChat';
 import HeaderArea from "../Routes/HeaderArea";
+import "./feuille.css";
 function Recrutement() {
  
   const [rect, setRecrutement] = useState([]);
