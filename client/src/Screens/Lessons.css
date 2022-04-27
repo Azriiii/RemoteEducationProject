@@ -1,0 +1,35 @@
+.ShowBookList1 {
+  background-color: auto;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 100px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: left;
+  
+  
+}
+.center1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* BookList Styles */
+.list1 {
+margin-left: 225px;
+margin-right: 50 px;
+  display: flex;
+ 
+  flex-direction: column;
+  flex-wrap: wrap;
+  
+  /* align-items: left; */
+  /* order: 5;
+  grid-template-columns: repeat(2, 2fr);
+  grid-auto-rows: 1fr;
+  grid-gap: 3px; */
+}

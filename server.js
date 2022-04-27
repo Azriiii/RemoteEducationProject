@@ -36,6 +36,7 @@ const userRouter = require('./routes/user.route');
 const routerCours = require('./routes/cour.route');
 const routerJobs = require('./routes/jobs.route');
 const routerEvents = require('./routes/event.route');
+const routerLessons = require('./routes/lesson.route');
 //const bodyparser = require('body-parser');
 
 
@@ -46,6 +47,7 @@ app.use('/api', userRouter)
 app.use('/api', routerCours)
 app.use('/api', routerJobs)
 app.use('/api', routerEvents)
+app.use('/api', routerLessons)
 app.use((req,res,next) => {
     res.status(404).json({
         success:false,
