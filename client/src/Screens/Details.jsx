@@ -18,6 +18,7 @@ function Details() {
   const [cours, setCour] = useState([]);
   const [form, setForm] = useState({});
   const {id} = useParams();
+  
 
   const [errors, setErrors] = useState({});
 

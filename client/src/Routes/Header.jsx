@@ -9,6 +9,10 @@ function HeaderVisteur() {
     let path = `/`; 
     history.push(path);
   }
+  const routeChangeCourses = () =>{ 
+    let path = `/courclient`; 
+    history.push(path);
+  }
   const routeChangeAbout= () =>{ 
     let path = `/about`; 
     history.push(path);
@@ -32,6 +36,7 @@ function HeaderVisteur() {
                     
                       <ul class="nav"> 
                           <li class="scroll-to-section"><a  onClick={routeChangeHome} class="active">Home</a></li>
+                          <li class="scroll-to-section"><a onClick={routeChangeCourses} >Courses</a></li>
                           <li><a href="/recrutement">Recrutement</a></li>
                           <li class="scroll-to-section"><a onClick={routeChangeAbout} >About Us</a></li>
                          

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const {ObjectId} = mongoose.Schema;
 const CourSchema = new mongoose.Schema({
   titre: {
     type: String,
@@ -11,8 +11,8 @@ prix: {
 },
 
 category: {
-    type: String,
-    required: true
+  type: String,
+
 },
 user: {
   type: String,
@@ -25,7 +25,7 @@ nbrlesson: {
 
 
   published_date: {
-    type: Date
+    type : Date 
   },
   desc: {
     type: String,
@@ -36,6 +36,15 @@ nbrlesson: {
     type: String,
     required: true
 },
+avatar: {
+  type: String,
+  required: true
+},
+bandeColor: {
+  type: String,
+  required: true
+},
+
 
 });
 

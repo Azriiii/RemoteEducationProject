@@ -9,13 +9,12 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import AddIcon from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom'
+import styled, { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme, GlobalStyles } from "./themes.js";
 import axios from "axios";
+import "./Meeting.css";
 
 
-
-import {ThemeProvider} from "styled-components";
-import { GlobalStyles } from "./globalStyles";
-import { lightTheme, darkTheme } from "./theme"
 
 import {
   Button,
@@ -27,6 +26,9 @@ import {
  
 } from "@material-ui/core";
 import HeaderF from "../Routes/Headerformat";
+const StyledApp = styled.div`
+  color: ${(props) => props.theme.fontColor};
+`;
 
 
 const locales = {
@@ -47,10 +49,11 @@ function Calendrier() {
     const [show, setShow] = useState(false);
     const [form, setForm] = useState({});
     const [open, setOpen] = useState(false);
-    const [theme, setTheme] = useState('light');
-    const themeToggler = () => {
-      theme === 'light' ? setTheme('dark') : setTheme('light')
-  }
+  const [theme, setTheme] = useState("light");
+
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
    
   const [eventts, setEventts] = useState([]);
   
@@ -117,38 +120,38 @@ function Calendrier() {
    return (
    
  
-
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+    <GlobalStyles />
+    <StyledApp>
 
 <div >
 
+<div align="center">
 
+</div>
 
 <HeaderF/>
 
-<div align="center">
 
-<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i></a></div>
 <br></br>
 
 <br></br>
 <br></br>
 
 
- 
-<ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-
-      
-          <GlobalStyles/>
         
-         
 
  
 <div align="center">
-
+<label class="switch">
+  <input  onClick={() => themeToggler()} type="checkbox"/>
+ <span class="slider "></span>
+</label>
           <Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
           </div>
           
-           
+        
+         
       
             <Dialog
         open={open}
@@ -180,18 +183,20 @@ function Calendrier() {
         </DialogActions>
       </Dialog>
    <div align="center">
-      <Calendar  onDoubleClickEvent={()=>OnDelete(eventts._id)} localizer={localizer} agenda={eventts} events={eventts} startAccessor="start" endAccessor="end" style={{ height: 500,width:1400, margin: "50px" }} />
 
+      <Calendar  onDoubleClickEvent={()=>OnDelete(eventts._id)} localizer={localizer} agenda={eventts} events={eventts} startAccessor="start" endAccessor="end" style={{ height: 500,width:1400, margin: "50px" }} />
+   
       </div>
   
     
     
   
- </ThemeProvider>
+
 
  </div>
 
-
+ </StyledApp>
+    </ThemeProvider>
 
     
     

@@ -23,6 +23,12 @@ import Meeting from './Screens/Meeting';
 import Details from './Screens/Details';
 import Profile from './Screens/profile';
 import Room from './Screens/Room';
+import ShowCour from './Routes/ShowCour';
+import Classes from './Screens/Classes';
+import AdminCourses from './Screens/AdminCourses';
+import AdminCategory from './Screens/AdminCategory';
+
+
 
 
 
@@ -31,8 +37,9 @@ ReactDOM.render(
   
 
 <BrowserRouter>
+
     <Switch>
-  
+   
     <Route path='/login' exact render={props => <Login {...props} />} />      
       <Route path='/register' exact render={props => <Register {...props} />} />      
       <Route path='/users/activate/:token' exact render={props => <Activate {...props} />} />
@@ -47,8 +54,12 @@ ReactDOM.render(
        <Route path="/contact" exact component={Contactus} />
        <Route path="/recrutement" exact component={Recrutement} />
        <Route path='/met' exact render={props => <Meeting {...props} />} />
+       <Route path='/courclient' exact render={props => <Classes {...props} />} />
+       <Route path='/admincours' exact render={props => <AdminCourses {...props} />} />
+       <Route path='/admincategorie' exact render={props => <AdminCategory {...props} />} />
        <Route path='/room' exact render={props => <Room {...props} />} />
        <Route path="/:id" exact component={Details} />
+       <Route path='/show-cour/:id' component={ShowCour} />
     
       
     </Switch>

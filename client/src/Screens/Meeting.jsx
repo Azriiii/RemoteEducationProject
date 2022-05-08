@@ -11,11 +11,10 @@ import InputGroup from "../Routes/InputGroup";
 import Meetings from "../Routes/Meetings";
 import {useSelector} from 'react-redux';
 
-import {ThemeProvider} from "styled-components";
-import { GlobalStyles } from "./globalStyles";
-import { lightTheme, darkTheme } from "./theme";
-import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 
+
+import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
+import InputColor from 'react-input-color';
 
 import {
   Button,
@@ -29,11 +28,16 @@ import {
 import "./Meeting.css";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Loading from "../Routes/Loading";
+import styled, { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme, GlobalStyles } from "./themes.js";
+import "antd/dist/antd.css";
+import { Pagination } from 'antd';
+
+function Meeting({ history}) {
   
 
-function Meeting({ history }) {
-
-
+  const [pageNumber, setPageNumber] = useState(1); 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,14 +49,25 @@ function Meeting({ history }) {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [show, setShow] = useState(false);
-  
+
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState('light');
-  const themeToggler = () => {
-    theme === 'light' ? setTheme('dark') : setTheme('light')}
+
     
  
+    const [categories, setCategories] = useState([]);
 
+    //load category frmo the backend
+          useEffect(()=>{ 
+              axios.get(`${process.env.REACT_APP_API_URL}/category/all`)
+              .then(res=>{
+                  console.log(res.data.categories);
+                  setCategories(res.data.categories);
+              })
+              .catch(error=>{
+                  console.log(error);
+                  toast.error(error.message);
+              });
+          },[])
  
 
 
@@ -80,7 +95,18 @@ const loadProfile = () => {
 };
 const { name, email, password1, textChange, role } = formData;
 const [cours, setCour] = useState([]);
-
+ /* delete */
+ const shocat = (id__)=>{
+  
+ 
+  axios.get(`${process.env.REACT_APP_API_URL}/category/show/${id__}`)
+  .then(res=>{
+   
+   setCategories(res.data);
+ 
+  })
+ 
+}
  /* find all users */
  useEffect(async () => {
  
@@ -88,12 +114,12 @@ const [cours, setCour] = useState([]);
   await axios.get(`${process.env.REACT_APP_API_URL}/cour`).then((res) => {
     var userId = res.data.filter((e)=> e.user === formData.name )
     setCour(userId);
-  
+ 
   
    
   }); 
 
-});
+})
 
 const [titre, setTitre] = useState('');
 const [prix, setPrix] = useState('');
@@ -104,14 +130,30 @@ const [nbrlesson, setNbrlesson] = useState('');
 const [desc, setDesc] = useState('');
 const [modalite, setModalite] = useState('');
 const [published_date, setPublished_date] = useState('');
+const [bandeColor, setBandeColor] = useState('');
 
+const [avatar, setAvatar] = useState('');
 
+const handleImage = (e) =>{
+  const file = e.target.files[0];
+  setFileToBase(file);
+
+}
+
+const setFileToBase = (file) =>{
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = () =>{
+      setAvatar(reader.result);
+  }
+
+}
 
 const onSubmitHandler = (e)=>{
  
   e.preventDefault();
  
-  axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date,desc,user:name,nbrlesson,modalite,category})
+  axios.post(`${process.env.REACT_APP_API_URL}/cour`, {titre,prix,published_date:Date.now().toString(),desc,user:name,nbrlesson,modalite,category,avatar,bandeColor})
   .then(res=>{
     setMessage(res.data.message)
     /* hide form after save */
@@ -122,6 +164,8 @@ const onSubmitHandler = (e)=>{
    setUser()
    setNbrlesson()
    setModalite()
+   setBandeColor()
+   setAvatar()
    setCategory()
     /* hide errors after save */
     setErrors({})
@@ -140,16 +184,7 @@ useEffect(()=>({
 
 }))
 
- // filter 
- const filterOptions = createFilterOptions({
-  matchFrom: 'start',
-  stringify: option => option,
-});
-  // const handleChange = text => e => {
 
-  //   setFormData({ ...formData, [text]: e.target.value });
-  // };
-  
    /* delete */
    const OnDelete = (id__)=>{
     if(window.confirm("are you sure to delete this course")){
@@ -168,6 +203,8 @@ useEffect(()=>({
 
   
 
+  
+
    return (
    
  
@@ -175,49 +212,52 @@ useEffect(()=>({
 <div>
 
 <HeaderF/>
+
+
 <body>
 
-
-  <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-
-
-
-          <GlobalStyles/>
+  
 
 <div>
 
 <div align="center">
-<a onClick={themeToggler}><i  class="fa fa-moon-o" aria-hidden="true"></i>Dark</a>
+
 </div>
     
 
-              <h2 className="display-4 text-center">Cours List</h2>
+              <h2 className="display-4 text-center">Cours List  </h2>
              
   <div className="ShowBookList">
   <div className="center">
-    
+
+
   <Button size="small" color="primary"  onClick={() => setOpen(true)} ><AddIcon fontSize="big" /> </Button>
 
   <ToastContainer />  
 
 </div>
+
          <div className="list">
        
        
-           {cours.map(({ titre, prix,published_date,desc,user,nbrlesson,modalite,_id }) => (
+           {
+           
+           cours.length === 0 ? <><h2>{` `}</h2>  <Loading/></> :
+
+           
+           cours.map(({ titre,published_date,desc,avatar,bandeColor,_id }) => (
  
               <Meetings
                 titre={titre}
-                prix={prix}
-            
-           
+              
                 published_date={published_date}
                 desc={desc}
-                user={user}
-                nbrlesson={nbrlesson}
-                modalite={modalite}
+                
+          
+                avatar={avatar}
+                bandeColor={bandeColor}
                 Id={_id}
-                OnDelete={OnDelete}
+             
                
                
               />
@@ -225,11 +265,18 @@ useEffect(()=>({
             )
             
             
-            )}
+            )
+            
+            
+            }
  
+ <div >
+     
+    
+    </div>
 
 
- 
+                       
     <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -254,25 +301,16 @@ useEffect(()=>({
             errors={errors.prix}
             placeholder="prix*"
           />
-            <InputGroup
-            label="Date de publication"
-            type="date"
-            name="published_date"
-            value={published_date}
-            onChange={e => setPublished_date(e.target.value)}
-            errors={errors.published_date}
-            placeholder="published_date"
-          />
-          <InputGroup
-            label="Category"
-            type="text"
-            name="category"
-            value={category}
-            onChange={e => setCategory(e.target.value)}
-            errors={errors.category}
-            placeholder="category"
-          />
-          
+            
+         <label>Catégorie</label>
+         <select onChange= {(e)=>setCategory(e.target.value)} id="cars" name="cars"    errors={errors.category}className="form-control select select-initialized">
+                                <option value="" >Choose Category</option>
+                                {
+                                  categories && categories.map(category =>(
+                                    <option key={category._id} value={category.name}>{category.name}</option>
+                                  ))  
+                                }
+                            </select>
              <InputGroup
             label="Nbrlesson"
             type="number"
@@ -301,11 +339,25 @@ useEffect(()=>({
             errors={errors.modalite}
             placeholder="modalite"
           />
-
+ <label>Color</label>
+         <select onChange= {(e)=>setBandeColor(e.target.value)} id="cars" name="cars"    errors={errors.bandeColor}className="form-control select select-initialized">
+                                <option value="" >Choose Category</option>
+                                <option value="primary" >Primary</option>
+                                <option value="secondary" >Secondary</option>
+                                <option value="success" >Success</option>
+                                <option value="danger" >Danger</option>
+                                <option value="warning" >Warning</option>
+                                <option value="info" >Info</option>
+                                <option value="light" >Light</option>
+                                <option value="dark" >Dark</option>
+                            </select>
           
-         
+<div className="form-outline mb-4">
+                    <input  type="file" id="formupload" name="image" className="form-control" onChange={handleImage} />
+                    <label className="form-label" htmlFor="form4Example2">Image</label>
+                </div>
        
-      
+                <img className="img-fluid" src={avatar} alt="" />
     
           <button className="butt" type="submit">Add course</button>
          
@@ -319,7 +371,7 @@ useEffect(()=>({
         </DialogActions>
       </Dialog>
     </div></div></div>
- </ThemeProvider>
+
 
 
  </body>

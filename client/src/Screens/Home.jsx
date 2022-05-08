@@ -49,56 +49,6 @@ function Home() {
  
 
 
-    <section className="our-courses" id="courses">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading">
-            <h2>Our Popular Courses</h2>
-          </div>
-        </div>
-        <div class="col-lg-12">
-        <div class='container-fluid' >    
-      
-        <div
-  id="carouselMultiItemExample"
-  class="carousel slide carousel-dark text-center"
-  data-mdb-ride="carousel"
->
-<div class="d-flex justify-content-center mb-4">
-<div 
->
-   
-    <div class="carousel-item active">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
- {cours.map(({ titre, prix, category, user, nbrlesson,published_date,desc,modalite }) => (
-              <Courses
-
-                titre={titre}
-                prix={prix}
-                category={category}
-                user={user}
-                nbrlesson={nbrlesson}
-                published_date={published_date}
-                desc={desc}
-                modalite={modalite}
-               
-               
-              />
-            ))}
- </div></div></div></div></div></div>
- 
-</div>
-
-
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
 
 

@@ -1,8 +1,7 @@
-
-
 import React from "react";
- 
-import AddIcon from '@material-ui/icons/Add';
+
+import  { useState } from "react";
+import { Link } from 'react-router-dom'
 
 import {
   Button,
@@ -13,45 +12,50 @@ import {
   DialogTitle,
  
 } from "@material-ui/core";
-function Courses({titre, prix, category, user, nbrlesson,published_date,desc,modalite}) {
+
+import { Card, CardActions, CardContent, CardMedia,Typography } from '@material-ui/core/';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import DeleteIcon from '@material-ui/icons/Delete';
+import UpdateIcon from '@material-ui/icons/Update';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { Badge } from 'reactstrap';
+import './card.css'
+function Courses({titre,published_date,desc,avatar,bandeColor,Id}) {  
+  const [open, setOpen] = useState(false);
+ 
   return (
   
-    
-    <div>
-            <div class="item">
-              <img src="../assets/images/meeting-01.jpg" alt="Course One"/>
-              <div class="down-content">
-                <h4>{titre}</h4>
-                <Button size="small" color="primary"  ><AddIcon fontSize="big" />Enroll </Button>
-                <div class="info">
-                  <div class="row">
-                    <div class="col-8">
-                   
-                      <ul>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                      </ul>
-                    </div>
-                    <div class="col-4">
-                       <span>{prix}</span>
-                     
+          <div className="cardd"
+         >
+            <div class="card"   >
 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
            
-           <br></br>
-         
-          
-          
-        </div>
+    <img src={avatar} class="card-img-top" alt="..."/>
+    <div class="card-body">
+      <h5 class="card-title">{titre}</h5>
+   
+      <p class="card-text">{desc}</p>
+      <p class="card-text"><small class="text-muted">{moment(published_date).fromNow()}</small></p>
+      <button type="button" class="btn btn-primary" 
+>
+<Link to={`/show-cour/${Id}`}> Détails
+                       
+                    </Link>
+</button>
+    </div>
+  </div>
+ 
+
+
+
+
+      </div>
+      
   
+
+     
   );
 }
 

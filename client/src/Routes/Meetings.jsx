@@ -20,54 +20,33 @@ import UpdateIcon from '@material-ui/icons/Update';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import './card.css';
+import { Badge } from 'reactstrap';
 
-function Meetings({titre, prix,published_date,desc,user,nbrlesson,modalite,Id, OnDelete}) {  
+function Meetings({titre,published_date,desc,avatar,bandeColor,Id}) {  
   const [open, setOpen] = useState(false);
-
+ 
   return (
   
-          <div className="high">
-         
-            <div class="card">
-    <img src="../assets/images/meeting-01.jpg" class="card-img-top" alt="..."/>
+          <div
+         >
+            <div class="card"   >
+
+            <Badge href="#"  color={bandeColor}>    </Badge>
+    <img src={avatar} class="card-img-top" alt="..."/>
     <div class="card-body">
       <h5 class="card-title">{titre}</h5>
+   
       <p class="card-text">{desc}</p>
       <p class="card-text"><small class="text-muted">{moment(published_date).fromNow()}</small></p>
-      <button type="button" class="btn btn-primary"  onClick={() => setOpen(true)}
+      <button type="button" class="btn btn-primary" 
 >
- Détails
+<Link to={`/show-cour/${Id}`}> Détails
+                       
+                    </Link>
 </button>
     </div>
   </div>
  
-
-  <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">{titre}</DialogTitle>
-        <DialogContent>
-
-      <p class="fw-bold">Owner:</p> {user}
-      <p class="fw-bold">Nombre lessons:</p> {nbrlesson}
-      <p class="fw-bold">Modalité:</p> {modalite} 
-      <p class="fw-bold">Prix:</p> ${prix} 
-    
-      <Button size="small" color="primary"  onClick={()=>OnDelete(Id)}><DeleteIcon fontSize="small" /> </Button>
-<Link to={`/${Id}`} className="text-white"> <Button size="small" color="primary" ><UpdateIcon fontSize="small" /> </Button>
-</Link>
-      
-  
- </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}  variant="primary">
-            Cancel
-          </Button>
-         
-        </DialogActions>
-      </Dialog>
 
 
 
